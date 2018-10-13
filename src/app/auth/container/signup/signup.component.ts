@@ -5,6 +5,11 @@ import {
     FormControl,
     Validators
 } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { from, timer } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+
+import { PasswordValidation } from '../../validators/password.validator';
 
 @Component({
     selector: 'app-signup',
@@ -14,7 +19,9 @@ import {
 export class SignupComponent implements OnInit {
     form: FormGroup;
 
-    constructor(private fb: FormBuilder) {}
+    success = true;
+
+    constructor(private fb: FormBuilder, private auth: AngularFireAuth) {}
 
     ngOnInit() {
         this.form = this.createForm();
@@ -22,8 +29,35 @@ export class SignupComponent implements OnInit {
 
     createForm() {
         return this.fb.group({
-            username: new FormControl('', Validators.required),
-            password: new FormControl('', Validators.required)
+            email: new FormControl('', [Validators.required, Validators.email]),
+            password: new FormControl('', Validators.required),
+            confirm_password: new FormControl('', [
+                Validators.required,
+                PasswordValidation.MatchPassword
+            ])
         });
+    }
+
+    createUser() {
+        this.success = null;
+
+        from(
+            this.auth.auth.createUserWithEmailAndPassword(
+                this.form.get('email').value,
+                this.form.get('password').value
+            )
+        )
+            .pipe(
+                switchMap(data => this.auth.authState),
+                tap(state => state.sendEmailVerification())
+            )
+            .subscribe(
+                data => {
+                    this.success = true;
+                },
+                err => {
+                    this.success = false;
+                }
+            );
     }
 }

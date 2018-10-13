@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -26,6 +26,7 @@ import { SignupComponent } from './container/signup/signup.component';
         MatButtonModule,
         MatCardModule
     ],
-    declarations: [LoginComponent, SignupComponent]
+    declarations: [LoginComponent, SignupComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AuthModule {}

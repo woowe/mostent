@@ -3,8 +3,27 @@
 
     background: #f8fafc;
 
+    .contained,
     mat-card {
         width: 300px;
         margin: 0 auto;
+    }
+
+    mat-card {
+        &.signup--success {
+            background: #39ceaa;
+            color: white;
+        }
+
+        &.signup--failure {
+            background: #c9331e;
+            color: white;
+        }
+    }
+
+    [mat-button] {
+        &.success {
+            border: 3px solid #39ceaa;
+        }
     }
 }
