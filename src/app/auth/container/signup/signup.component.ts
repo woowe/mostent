@@ -9,7 +9,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { from, timer } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { PasswordValidation } from '../../validators/password.validator';
+import { matchPassword } from '../../../shared/validators';
 
 @Component({
     selector: 'app-signup',
@@ -19,7 +19,7 @@ import { PasswordValidation } from '../../validators/password.validator';
 export class SignupComponent implements OnInit {
     form: FormGroup;
 
-    success = true;
+    success;
 
     constructor(private fb: FormBuilder, private auth: AngularFireAuth) {}
 
@@ -28,14 +28,17 @@ export class SignupComponent implements OnInit {
     }
 
     createForm() {
-        return this.fb.group({
-            email: new FormControl('', [Validators.required, Validators.email]),
-            password: new FormControl('', Validators.required),
-            confirm_password: new FormControl('', [
-                Validators.required,
-                PasswordValidation.MatchPassword
-            ])
-        });
+        return new FormGroup(
+            {
+                email: new FormControl('', [
+                    Validators.required,
+                    Validators.email
+                ]),
+                password: new FormControl('', Validators.required),
+                confirm_password: new FormControl('', [Validators.required])
+            },
+            { validators: matchPassword }
+        );
     }
 
     createUser() {

@@ -1,0 +1,15 @@
+.container {
+    min-height: 100vh;
+
+    background: #f8fafc;
+
+    .contained,
+    mat-card {
+        width: 300px;
+        margin: 0 auto;
+
+        [mat-raised-button] {
+            text-transform: uppercase;
+        }
+    }
+}
