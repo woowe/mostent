@@ -18,6 +18,9 @@
             </mat-card-actions>
         </form>
     </mat-card>
-    <h3 class="mat-typography">OR</h3>
-    <button mat-raised-button>Sign in with Google</button>
+    <div class="contained mat-typography" fxLayout="column" fxLayoutGap="8px">
+        <p>Don't have an account yet?</p>
+        <a mat-raised-button color="accent" routerLink="/auth/signup" routerLinkActive="router-link-active">Create an
+            account</a>
+    </div>
 </div>
