@@ -10,6 +10,12 @@ import { from, timer } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 import { matchPassword } from '../../../shared/validators';
+import {
+    AngularFirestore,
+    AngularFirestoreCollection
+} from '@angular/fire/firestore';
+import { User } from 'src/app/shared/models/user';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
     selector: 'app-signup',
@@ -21,10 +27,18 @@ export class SignupComponent implements OnInit {
 
     success;
 
-    constructor(private fb: FormBuilder, private auth: AngularFireAuth) {}
+    userCollection: AngularFirestoreCollection<User>;
+
+    constructor(
+        private fb: FormBuilder,
+        private auth: AuthService,
+        private afs: AngularFirestore
+    ) {}
 
     ngOnInit() {
         this.form = this.createForm();
+
+        this.userCollection = this.afs.collection('Users');
     }
 
     createForm() {
@@ -44,15 +58,10 @@ export class SignupComponent implements OnInit {
     createUser() {
         this.success = null;
 
-        from(
-            this.auth.auth.createUserWithEmailAndPassword(
+        this.auth
+            .createUser(
                 this.form.get('email').value,
                 this.form.get('password').value
-            )
-        )
-            .pipe(
-                switchMap(data => this.auth.authState),
-                tap(state => state.sendEmailVerification())
             )
             .subscribe(
                 data => {

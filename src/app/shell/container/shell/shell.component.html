@@ -1,0 +1,25 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over">
+        <div class="header" fxLayout="row" fxLayoutAlign="end end">
+            <button mat-button (click)="sidenav.toggle()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+            <h1 class="mat-typography">Mostent</h1>
+
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px">
+            <div>
+                <button mat-button (click)="sidenav.toggle()">
+                    <ion-icon name="menu"></ion-icon>
+                </button>
+                <span>Mostent</span>
+            </div>
+            <button mat-button (click)="signOut()">
+                Sign Out
+            </button>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

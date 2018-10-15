@@ -8,6 +8,13 @@ import {
 import { AngularFireAuth } from '@angular/fire/auth';
 import { from, timer } from 'rxjs';
 import { Router } from '@angular/router';
+import {
+    AngularFirestore,
+    AngularFirestoreCollection
+} from '@angular/fire/firestore';
+import { User } from 'src/app/shared/models/user';
+import { Store } from '@ngxs/store';
+import { Login } from '../../actions/auth';
 
 @Component({
     selector: 'app-login',
@@ -17,12 +24,21 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
     form: FormGroup;
 
-    success;
+    public success;
 
-    constructor(private afAuth: AngularFireAuth, private router: Router) {}
+    userCollection: AngularFirestoreCollection<User>;
+
+    constructor(
+        private afAuth: AngularFireAuth,
+        private router: Router,
+        private afs: AngularFirestore,
+        private store: Store
+    ) {}
 
     ngOnInit() {
         this.form = this.createForm();
+
+        this.userCollection = this.afs.collection<User>('Users');
     }
 
     createForm() {
@@ -33,30 +49,26 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        from(
-            this.afAuth.auth.signInWithEmailAndPassword(
-                this.form.get('email').value,
-                this.form.get('password').value
+        this.store
+            .dispatch(
+                new Login(
+                    this.form.get('email').value,
+                    this.form.get('password').value
+                )
             )
-        ).subscribe(
-            user => {
-                if (!user.user.emailVerified) {
-                    this.success = false;
+            .subscribe(
+                userCred => {
+                    console.log('Success', userCred);
 
-                    console.warn("User doesn't have a verified email", user);
-                } else {
                     this.success = true;
 
-                    timer(200).subscribe(() => {
-                        this.router.navigate(['/dashboard']);
-                    });
-                }
-            },
-            err => {
-                this.success = false;
+                    this.router.navigate(['/']);
+                },
+                err => {
+                    console.log('Something went wrong!', err);
 
-                console.log(err);
-            }
-        );
+                    this.success = false;
+                }
+            );
     }
 }
