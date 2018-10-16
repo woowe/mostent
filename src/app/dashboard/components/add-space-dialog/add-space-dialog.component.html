@@ -1,0 +1,10 @@
+<form [formGroup]="form" fxLayout="column">
+    <h2 class="mat-headline">Create Space</h2>
+    <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name">
+    </mat-form-field>
+    <div class="controls" fxLayout="row" fxLayoutAlign="space-between start">
+        <button mat-raised-button color="primary" (click)="createSpace()">Create</button>
+        <button mat-button (click)="close()">Cancel</button>
+    </div>
+</form>

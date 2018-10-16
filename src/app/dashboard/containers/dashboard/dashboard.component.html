@@ -1,7 +1,19 @@
 <section id="Header" fxLayout="row" fxLayoutAlign="space-between center">
     <h1 class="mat-headline">Spaces</h1>
-    <button class="dashboard--add-space" mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="start center">
+    <button (click)="openSpaceDialog()" class="dashboard--add-space" mat-raised-button color="accent" fxLayout="row"
+        fxLayoutAlign="start center">
         <ion-icon name="add"></ion-icon>
         <span>Add Space</span>
     </button>
+</section>
+<section id="Spaces">
+    <mat-nav-list>
+        <mat-list-item *ngFor="let space of (spaces$ | async)">
+            <a [routerLink]="['/space', space.uid]" routerLinkActive="router-link-active" class="container" fxLayout="row"
+                fxLayoutAlign="space-between center">
+                <div class="mat-body-1">{{ space.name }}</div>
+                <ion-icon name="arrow-forward"></ion-icon>
+            </a>
+        </mat-list-item>
+    </mat-nav-list>
 </section>

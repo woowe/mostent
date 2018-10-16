@@ -1,22 +1,29 @@
-import { State, StateContext, Action } from '@ngxs/store';
+import { State, StateContext, Action, Select, Selector } from '@ngxs/store';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Login } from '../actions/auth';
+import { Login, UpdateUser } from '../actions/auth';
 import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { User } from 'src/app/shared/models/user';
 
 export interface AuthStateModel {
     userCred: firebase.auth.UserCredential;
+    user: User;
 }
 
 @State<AuthStateModel>({
     name: 'auth',
     defaults: {
-        userCred: null
+        userCred: null,
+        user: null
     }
 })
 export class AuthState {
+    @Selector()
+    static user(state: AuthStateModel) {
+        return state.user;
+    }
+
     constructor(private afs: AngularFirestore, private auth: AuthService) {}
 
     @Action(Login)
@@ -37,5 +44,15 @@ export class AuthState {
                 return userCred;
             })
         );
+    }
+
+    @Action(UpdateUser)
+    updateUser(
+        { patchState }: StateContext<AuthStateModel>,
+        { user }: UpdateUser
+    ) {
+        patchState({
+            user
+        });
     }
 }

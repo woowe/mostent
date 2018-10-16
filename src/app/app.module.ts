@@ -12,6 +12,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 
 import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 @NgModule({
     declarations: [AppComponent],
@@ -23,7 +25,9 @@ import { NgxsModule } from '@ngxs/store';
         AngularFireAuthModule,
         AngularFireStorageModule,
         NgxsModule.forRoot([]),
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        NgxsReduxDevtoolsPluginModule.forRoot(),
+        NgxsLoggerPluginModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent],

@@ -1,6 +1,11 @@
 import { User } from 'src/app/shared/models/user';
 import { Space } from 'src/app/shared/models/space';
 
+export class FetchSpaces {
+    static readonly type = '[Space] FetchSpaces';
+    constructor(public user: User) {}
+}
+
 export class CreateSpace {
     static readonly type = '[Space] Create Space';
     constructor(public name: string, public user: User) {}

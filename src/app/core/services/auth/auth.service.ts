@@ -8,6 +8,8 @@ import {
 import { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
 import { switchMap, tap } from 'rxjs/operators';
+import { Store } from '@ngxs/store';
+import { UpdateUser } from '../../actions/auth';
 
 @Injectable({
     providedIn: 'root'
@@ -18,14 +20,20 @@ export class AuthService {
     constructor(
         private afAuth: AngularFireAuth,
         private afs: AngularFirestore,
-        private router: Router
+        private router: Router,
+        private store: Store
     ) {
         this.user = this.afAuth.authState.pipe(
             switchMap(user => {
                 if (user) {
                     return this.afs
                         .doc<User>(`Users/${user.uid}`)
-                        .valueChanges();
+                        .valueChanges()
+                        .pipe(
+                            tap(val => {
+                                this.store.dispatch(new UpdateUser(val));
+                            })
+                        );
                 }
 
                 return of(null);

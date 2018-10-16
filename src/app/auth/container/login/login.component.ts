@@ -14,7 +14,7 @@ import {
 } from '@angular/fire/firestore';
 import { User } from 'src/app/shared/models/user';
 import { Store } from '@ngxs/store';
-import { Login } from '../../actions/auth';
+import { Login } from 'src/app/core/actions/auth';
 
 @Component({
     selector: 'app-login',

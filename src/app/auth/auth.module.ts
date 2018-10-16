@@ -13,21 +13,20 @@ import {
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './container/login/login.component';
 import { SignupComponent } from './container/signup/signup.component';
-import { NgxsModule } from '@ngxs/store';
-import { AuthState } from './state/auth';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
     imports: [
         CommonModule,
         AuthRoutingModule,
+        CoreModule,
         FormsModule,
         ReactiveFormsModule,
         FlexLayoutModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-        MatCardModule,
-        NgxsModule.forFeature([AuthState])
+        MatCardModule
     ],
     declarations: [LoginComponent, SignupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

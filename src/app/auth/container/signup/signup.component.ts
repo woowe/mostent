@@ -5,9 +5,6 @@ import {
     FormControl,
     Validators
 } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { from, timer } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
 
 import { matchPassword } from '../../../shared/validators';
 import {

@@ -16,5 +16,10 @@ ion-icon {
     }
 }
 
-[mat-raised-button][class='dashboard--add-space'] {
+mat-nav-list {
+    mat-list-item {
+        .container {
+            width: 100%;
+        }
+    }
 }

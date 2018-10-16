@@ -3,17 +3,34 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
-import { MatButtonModule } from '@angular/material';
+import {
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule
+} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AddSpaceDialogComponent } from './components/add-space-dialog/add-space-dialog.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
     imports: [
         CommonModule,
         DashboardRoutingModule,
+        CoreModule,
+        FormsModule,
+        ReactiveFormsModule,
         FlexLayoutModule,
-        MatButtonModule
+        MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatListModule
     ],
-    declarations: [DashboardComponent],
+    declarations: [DashboardComponent, AddSpaceDialogComponent],
+    entryComponents: [AddSpaceDialogComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DashboardModule {}
