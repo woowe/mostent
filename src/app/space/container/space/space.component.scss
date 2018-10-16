@@ -1,0 +1,38 @@
+:host {
+    display: block;
+    padding: 24px;
+    width: 900px;
+    max-width: calc(100% - 48px);
+    margin: 0 auto;
+
+    min-height: 100vh;
+
+    position: relative;
+}
+
+.spinner-container {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.uploads {
+    margin-top: 18px;
+
+    .upload-task {
+        p {
+            width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        mat-progress-bar {
+            height: 7px;
+            border-radius: 3px;
+        }
+    }
+}

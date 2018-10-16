@@ -1,3 +1,64 @@
-<p>
-  space works!
-</p>
+<div *ngIf="(space$ | async); else loading; let space">
+    <h1 class="mat-headline">{{ space.name }}</h1>
+    <div fxLayout="column" fxLayoutGap="20px">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Settings</mat-card-title>
+                <mat-card-subtitle>Info pertaining to the space.</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content fxLayout="row">
+                <form [formGroup]="form" fxLayout="column" fxFlex="50%">
+                    <mat-form-field>
+                        <input matInput placeholder="Name" [value]="space.name" formControlName="name">
+                    </mat-form-field>
+                    <div class="controls">
+                        <button (click)="updateSpaceInfo(space.uid)" type="submit" mat-raised-button color="primary">Update</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Upload image</mat-card-title>
+                <mat-card-subtitle>Upload image to space</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <file-drop headertext="Drop png or jpg files here" (onFileDrop)="dropped($event, space.uid)">
+                </file-drop>
+                <div class="uploads">
+                    <div class="upload-task" *ngFor="let uploadTask of uploadTasks" fxLayout="row" fxLayoutAlign="center center"
+                        fxLayoutGap="12px">
+                        <p class="mat-caption">{{ uploadTask.name }}</p>
+                        <mat-progress-bar color="accent" fxFlex="1 1 auto" mode="determinate" [value]="(uploadTask.percentChanges | async) || 0"></mat-progress-bar>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Images</mat-card-title>
+                <mat-card-subtitle>All images in the space</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- <mat-card>
+        <mat-card-header>
+            <mat-card-title>Images</mat-card-title>
+            <mat-card-subtitle>All the images for this space</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+        </mat-card-content>
+    </mat-card> -->
+</div>
+<ng-template #loading>
+    <div class="spinner-container">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+</ng-template>

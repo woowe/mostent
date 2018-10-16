@@ -50,7 +50,12 @@ export class SpaceService {
         return Promise.all([a, b]);
     }
 
-    updateSpace() {}
+    updateSpace(space: Partial<Space>) {
+        const { uid } = space;
+        const spaceRef = this.afs.doc<Space>(`Spaces/${uid}`);
+
+        return spaceRef.update(space);
+    }
 
     deleteSpace() {}
 }

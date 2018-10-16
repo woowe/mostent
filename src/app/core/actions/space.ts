@@ -13,7 +13,7 @@ export class CreateSpace {
 
 export class UpdateSpace {
     static readonly type = '[Space] Update Space';
-    constructor(public readonly space: Partial<Space>) {}
+    constructor(public space: Partial<Space>) {}
 }
 
 export class DeleteSpace {
