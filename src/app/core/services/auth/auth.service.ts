@@ -10,6 +10,8 @@ import { User } from 'src/app/shared/models/user';
 import { switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { UpdateUser } from '../../actions/auth';
+import { Space } from 'src/app/shared/models/space';
+import * as firebase from 'firebase';
 
 @Injectable({
     providedIn: 'root'
@@ -69,6 +71,14 @@ export class AuthService {
         };
 
         return userRef.set(data, { merge: true });
+    }
+
+    addUserToSpace(space: Space, user: User) {
+        const userRef = this.afs.doc(`Assets/${user.uid}`);
+
+        return this.afs.doc(`Spaces/${space.uid}`).update({
+            assets: firebase.firestore.FieldValue.arrayUnion(userRef.ref)
+        });
     }
 
     signOut() {

@@ -36,3 +36,37 @@
         }
     }
 }
+
+mat-grid-list {
+    mat-grid-tile {
+        p {
+            display: inline;
+
+            position: absolute;
+            bottom: 6px;
+            right: calc(6px + 1.42857vw);
+
+            z-index: 100;
+
+            background: white;
+            color: #000;
+            font-weight: bold;
+
+            margin: 0;
+
+            border: 2px solid white;
+
+            box-shadow: 1.42857vw 0 0 white, -1.42857vw 0 0 white;
+        }
+
+        button {
+            position: absolute;
+            right: 6px;
+            top: 6px;
+
+            color: #000;
+            font-size: 22px;
+            background: white;
+        }
+    }
+}

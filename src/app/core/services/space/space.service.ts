@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/models/user';
 import { AuthService } from '../auth/auth.service';
 import { Space } from 'src/app/shared/models/space';
 import { map } from 'rxjs/operators';
+import { from, zip, combineLatest, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -55,6 +56,19 @@ export class SpaceService {
         const spaceRef = this.afs.doc<Space>(`Spaces/${uid}`);
 
         return spaceRef.update(space);
+    }
+
+    joinAssets(space: Space) {
+        if (!space.assets || !space.assets.length) {
+            return of([]);
+        }
+
+        const assetRefs = [];
+        for (const assetRef of space.assets) {
+            assetRefs.push(from(assetRef.get().then(snap => snap.data())));
+        }
+
+        return combineLatest(assetRefs);
     }
 
     deleteSpace() {}

@@ -8,6 +8,11 @@ const routes: Routes = [
         component: ShellComponent,
         children: [
             {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'dashboard'
+            },
+            {
                 path: 'dashboard',
                 loadChildren: '../dashboard/dashboard.module#DashboardModule'
             },

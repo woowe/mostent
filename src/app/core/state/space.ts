@@ -34,6 +34,16 @@ export class SpaceState {
             switchMap(spaceDocRefs =>
                 combineLatest(spaceDocRefs.map(ref => ref.valueChanges()))
             ),
+            switchMap(async spaces => {
+                for (const space of spaces) {
+                    const assets = await this.spaceService
+                        .joinAssets(space)
+                        .toPromise();
+                    space.assets = assets;
+                }
+
+                return spaces;
+            }),
             tap(spaces => {
                 patchState({
                     all: spaces

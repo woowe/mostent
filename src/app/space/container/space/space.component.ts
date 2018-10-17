@@ -1,8 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, never } from 'rxjs';
+import { Observable, never, from } from 'rxjs';
 import { Space } from 'src/app/shared/models/space';
-import { map, switchMap, tap, finalize } from 'rxjs/operators';
+import {
+    map,
+    switchMap,
+    tap,
+    finalize,
+    combineLatest,
+    take,
+    takeWhile,
+    takeUntil,
+    toArray,
+    takeLast
+} from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
@@ -16,6 +27,10 @@ import {
     FileSystemDirectoryEntry
 } from 'ngx-file-drop';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { AssetsService } from 'src/app/core/services/assets/assets.service';
+import { AddAsset, RemoveAsset } from 'src/app/core/actions/asset';
+import { AssetState } from 'src/app/core/state/asset';
+import { Asset } from 'src/app/shared/models/asset';
 
 @Component({
     selector: 'app-space',
@@ -34,13 +49,32 @@ export class SpaceComponent implements OnInit {
         private afs: AngularFirestore,
         private route: ActivatedRoute,
         private store: Store,
-        private storage: AngularFireStorage
+        private storage: AngularFireStorage,
+        private assetService: AssetsService,
+        private spaceService: SpaceService
     ) {}
 
     ngOnInit() {
         this.space$ = this.route.params.pipe(
             map(params => params['id']),
-            switchMap(id => this.afs.doc<Space>(`Spaces/${id}`).valueChanges())
+            switchMap(id => this.afs.doc<Space>(`Spaces/${id}`).valueChanges()),
+            switchMap(async space => {
+                const assets = await this.spaceService
+                    .joinAssets(space)
+                    .toPromise();
+                space.assets = assets;
+
+                for (const asset of assets) {
+                    const fileRef = this.storage.ref(asset.path);
+                    asset.url = await fileRef.getDownloadURL().toPromise();
+                    asset.basename = this.basename(asset.path);
+                }
+
+                return space;
+            }),
+            tap(space => {
+                console.log(space);
+            })
         );
 
         this.form = this.createForm();
@@ -63,6 +97,12 @@ export class SpaceComponent implements OnInit {
         }
     }
 
+    removeAsset(asset: Asset, space: Space) {
+        this.store.dispatch(new RemoveAsset(asset, space)).subscribe(data => {
+            console.log('asset removeed!!!');
+        });
+    }
+
     public dropped(event: UploadEvent, uid: string) {
         this.files = event.files;
         for (const droppedFile of event.files) {
@@ -81,16 +121,22 @@ export class SpaceComponent implements OnInit {
                         percentChanges: task.percentageChanges()
                     });
 
-                    task.snapshotChanges()
+                    from(task)
                         .pipe(
-                            finalize(() => {
-                                console.log('file upload complete');
-
-                                // let idx = this.uploadTasks.findIndex(v => v.name === droppedFile.relativePath);
-                                // this.uploadTasks
-                            })
+                            combineLatest(this.space$),
+                            take(1),
+                            switchMap(
+                                ([task, space]) => {
+                                    return this.store.dispatch(
+                                        new AddAsset(filePath, space)
+                                    );
+                                },
+                                ([task, space], state) => ({ space, state })
+                            )
                         )
-                        .subscribe();
+                        .subscribe(data => {
+                            console.log('data', data);
+                        });
                 });
             } else {
                 // It was a directory (empty directories are added, otherwise only files)
@@ -106,5 +152,9 @@ export class SpaceComponent implements OnInit {
 
     public fileLeave(event) {
         console.log(event);
+    }
+
+    private basename(path) {
+        return path.split('/').reverse()[0];
     }
 }
