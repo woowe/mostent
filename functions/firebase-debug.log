@@ -1,0 +1,28 @@
+[debug] [2018-10-18T03:47:03.564Z] ----------------------------------------------------------------------
+[debug] [2018-10-18T03:47:03.565Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\bin\firebase serve --only functions
+[debug] [2018-10-18T03:47:03.566Z] CLI Version:   5.0.1
+[debug] [2018-10-18T03:47:03.566Z] Platform:      win32
+[debug] [2018-10-18T03:47:03.566Z] Node Version:  v8.9.1
+[debug] [2018-10-18T03:47:03.567Z] Time:          Wed Oct 17 2018 22:47:03 GMT-0500 (Central Daylight Time)
+[debug] [2018-10-18T03:47:03.567Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-18T03:47:03.575Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-18T03:47:03.575Z] > authorizing via signed-in user
+[debug] [2018-10-18T03:47:03.575Z] [iam] checking project mostent-dc867 for permissions ["firebase.projects.get"]
+[debug] [2018-10-18T03:47:03.576Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/mostent-dc867:testIamPermissions  
+
+[debug] [2018-10-18T03:47:03.773Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-18T03:47:03.774Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/mostent-dc867  
+ 
+[debug] [2018-10-18T03:47:03.929Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\jason\Documents\mostent'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-10-18T03:47:04.541Z] Fetching environment
+[debug] [2018-10-18T03:47:04.543Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/1073635411886:getServerAppConfig  
+ 
+[debug] [2018-10-18T03:47:04.694Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-18T03:47:04.695Z] Starting @google-cloud/functions-emulator
+[debug] [2018-10-18T03:47:06.230Z] Parsing function triggers
+[info] +  functions: getImage: http://localhost:5000/mostent-dc867/us-central1/getImage
