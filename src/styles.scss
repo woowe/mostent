@@ -1,8 +1,141 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:900|Playfair+Display:400,700,900|Roboto:400,500,700,900');
+
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+$app-colors: (
+    background: #191d3e,
+    foreground: #3763d7,
+    accent1: #39ceaa,
+    accent2: #f6f8f9,
+    accent3: #24d1b4,
+    info: #3763d7,
+    success: #27ae60,
+    fail: #eb5757,
+    warn: #f2c94c
+);
+
+$mdc-theme-primary: map-get(
+    $map: $app-colors,
+    $key: 'foreground'
+); // primary color
+$mdc-theme-secondary: map-get(
+    $map: $app-colors,
+    $key: 'accent1'
+); // secondary color
+
+@import '~@angular-mdc/theme/material';
 
 html,
 body {
     margin: 0;
     padding: 0;
+}
+
+// $background: map-get($app-colors, 'background');
+// $accent1: map-get(
+//     $map: $app-colors,
+//     $key: 'accent1'
+// );
+// $accent2: map-get(
+//     $map: $app-colors,
+//     $key: 'accent2'
+// );
+// $warn: map-get(
+//     $map: $app-colors,
+//     $key: 'warn'
+// );
+
+.app-typo- {
+    &serif {
+        font-family: 'Playfair Display', serif;
+    }
+
+    &sansserif {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    &brand {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    &h1 {
+        @extend .app-typo-sansserif;
+        font-size: 96px;
+        font-weight: 400;
+    }
+
+    &h2 {
+        @extend .app-typo-sansserif;
+        font-size: 60px;
+        font-weight: 400;
+    }
+
+    &h3 {
+        @extend .app-typo-serif;
+        font-size: 48px;
+        font-weight: 400;
+    }
+
+    &h4 {
+        @extend .app-typo-sansserif;
+        font-size: 34px;
+        font-weight: 400;
+    }
+
+    &h5 {
+        @extend .app-typo-sansserif;
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    &h6 {
+        @extend .app-typo-sansserif;
+        font-size: 20;
+        font-weight: 500;
+    }
+
+    &subtitle-1 {
+        @extend .app-typo-sansserif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    &subtitle-2 {
+        @extend .app-typo-sansserif;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    &body-1 {
+        @extend .app-typo-sansserif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    &body-2 {
+        @extend .app-typo-sansserif;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    &button {
+        @extend .app-typo-sansserif;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    &caption {
+        @extend .app-typo-sansserif;
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    &overline {
+        @extend .app-typo-sansserif;
+        font-size: 10px;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
 }

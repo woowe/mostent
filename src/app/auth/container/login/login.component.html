@@ -1,26 +1,24 @@
 <div class="container" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <mat-card>
-        <form [formGroup]="form">
-            <mat-card-header>
-                <h1>Sign In</h1>
-            </mat-card-header>
-            <mat-card-content fxLayout="column" fxLayoutGap="8px">
-                <mat-form-field>
-                    <input matInput type="email" placeholder="Email" formControlName="email">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput type="password" placeholder="Password" formControlName="password">
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button [disabled]="!form.valid" (click)="login()" mat-raised-button color="primary" type="submit">Sign
-                    In</button>
-            </mat-card-actions>
-        </form>
-    </mat-card>
-    <div class="contained mat-typography" fxLayout="column" fxLayoutGap="8px">
-        <p>Don't have an account yet?</p>
+    <div class="branding-container">
+        <img src="../../../../assets/login_graphic.svg">
+        <span class="app-typo-brand">m</span>
+    </div>
+    <form [formGroup]="form" fxLayout="column" fxLayoutGap="20px">
+        <h1 class="app-typo-h3">Hello!</h1>
+        <mdc-form-field>
+            <mdc-text-field type="email" label="Email" formControlName="email">
+            </mdc-text-field>
+        </mdc-form-field>
+        <mdc-form-field>
+            <mdc-text-field type="password" label="Password" formControlName="password">
+            </mdc-text-field>
+        </mdc-form-field>
+        <button [disabled]="!form.valid" (click)="login()" mat-raised-button color="primary" type="submit">Sign
+            In</button>
+    </form>
+    <!-- <div class="contained mat-typography" fxLayout="column" fxLayoutGap="8px">
+        <p>Don't have an account yet?</p>fullwidth
         <a mat-raised-button color="accent" routerLink="/auth/signup" routerLinkActive="router-link-active">Create an
             account</a>
-    </div>
+    </div> -->
 </div>

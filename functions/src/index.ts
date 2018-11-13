@@ -1,49 +1,81 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-
-import * as os from 'os';
-import * as path from 'path';
-
-import * as mime from 'mime-types';
-import { urlencoded } from 'body-parser';
+import * as express from 'express';
+import { tmpdir } from 'os';
+import { join } from 'path';
+import * as fs from 'fs-extra';
+import * as sharp from 'sharp';
 
 admin.initializeApp();
 
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+function resize(path, format, width, height, fit, position) {
+    const readStream = fs.createReadStream(path);
+    let transform = sharp();
 
-export const getImage = functions.https.onRequest((request, response) => {
-    const { uid, file, w, h, format, size } = request.query;
+    if (format) {
+        transform = transform.toFormat(format, { progressive: true });
+    }
 
-    const bucketName = admin.storage().bucket().name;
+    if (width || height || fit || position) {
+        transform = transform.resize({ width, height, fit, position });
+    }
 
-    response.send({
-        bucketName: admin.storage().bucket().name
-    });
+    return readStream.pipe(transform);
+}
 
-    // const gcpFile = await admin
-    //     .storage()
-    //     .bucket()
-    //     .file(`/space/${uid}/${file}`)
-    //     .get();
+const app2 = express();
+app2.get('/space/:spaceUid/:file', async (req, res) => {
+    const { spaceUid, file } = req.params;
 
-    const bucketPath = `space/${uid}/${file}`;
+    // path setup
+    const workdir = join(tmpdir(), `space/${spaceUid}`);
+    const filePath = join(workdir, file);
 
-    response.redirect(
-        `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(
-            bucketPath
-        )}?alt=media`
-    );
+    fs.ensureDir(workdir);
 
-    // response.send(gcpFile[1]);
+    // variables used in the try/catch blocks
+    let gcpFile, exists, buff;
 
-    // response.send({
-    //     space,
-    //     fileName,
-    //     w,
-    //     h,
-    //     format,
-    //     size
-    // });
+    try {
+        gcpFile = await admin
+            .storage()
+            .bucket()
+            .file(`space/${spaceUid}/${file}`)
+            .get();
+    } catch (e) {
+        console.error(`Unable to get 'space/${spaceUid}/${file}'`, e);
+        return;
+    }
+
+    // download the file from firebase storage if the file doesn't already exsit
+    try {
+        exists = await fs.pathExists(filePath);
+        if (!exists) {
+            buff = await gcpFile[0].download({ destination: filePath });
+        }
+    } catch (e) {
+        console.error(`Unable to download file to destination: ${filePath}`, e);
+        return;
+    }
+
+    let { width, height, fit, position, format } = req.query;
+
+    if (width) {
+        width = parseInt(width);
+    }
+
+    if (height) {
+        height = parseInt(height);
+    }
+
+    let contentType = gcpFile[1].contentType;
+
+    if (format) {
+        contentType = `image/${format}`;
+    }
+
+    res.type(contentType);
+    resize(filePath, format, width, height, fit, position).pipe(res);
 });
+
+export const getImage = functions.https.onRequest(app2);

@@ -10,6 +10,8 @@ import {
     MatCardModule
 } from '@angular/material';
 
+import { MdcTextFieldModule, MdcFormFieldModule } from '@angular-mdc/web';
+
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './container/login/login.component';
 import { SignupComponent } from './container/signup/signup.component';
@@ -23,10 +25,9 @@ import { CoreModule } from '../core/core.module';
         FormsModule,
         ReactiveFormsModule,
         FlexLayoutModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatCardModule
+        MdcFormFieldModule,
+        MdcTextFieldModule,
+        MatButtonModule
     ],
     declarations: [LoginComponent, SignupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
