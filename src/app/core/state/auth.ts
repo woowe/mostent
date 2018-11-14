@@ -11,6 +11,12 @@ export interface AuthStateModel {
     user: User;
 }
 
+function EmailVerifiedError(message, userCred) {
+    this.message = message;
+    this.userCred = userCred;
+    this.name = 'EmailVerifiedError';
+}
+
 @State<AuthStateModel>({
     name: 'auth',
     defaults: {
@@ -34,7 +40,10 @@ export class AuthState {
         return from(this.auth.emailPasswordLogin(email, password)).pipe(
             map(userCred => {
                 if (!userCred.user.emailVerified) {
-                    throw new Error("User doesn't have a verified email!");
+                    throw new EmailVerifiedError(
+                        "User doesn't have a verified email!",
+                        userCred
+                    );
                 }
 
                 patchState({

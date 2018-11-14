@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
 
     userCollection: AngularFirestoreCollection<User>;
 
+    infoMessage;
+
     constructor(
         private afAuth: AngularFireAuth,
         private router: Router,
@@ -38,6 +40,10 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.createForm();
+
+        this.form.valueChanges.subscribe(() => {
+            this.success = null;
+        });
 
         this.userCollection = this.afs.collection<User>('Users');
     }
@@ -69,6 +75,12 @@ export class LoginComponent implements OnInit {
                     console.log('Something went wrong!', err);
 
                     this.success = false;
+
+                    if (err.name === 'EmailVerifiedError') {
+                        this.infoMessage = 'Please verify your login';
+                    } else {
+                        this.infoMessage = 'Email or password is wrong';
+                    }
                 }
             );
     }

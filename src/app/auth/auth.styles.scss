@@ -1,0 +1,184 @@
+@import '../../../../styles.scss';
+
+$background: map-get($app-colors, 'background');
+$accent1: map-get(
+    $map: $app-colors,
+    $key: 'accent1'
+);
+$accent2: map-get(
+    $map: $app-colors,
+    $key: 'accent2'
+);
+$warn: map-get(
+    $map: $app-colors,
+    $key: 'warn'
+);
+
+.container {
+    min-height: 100vh;
+
+    background: $background;
+
+    .branding-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+
+        &::after {
+            content: '';
+
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            background: linear-gradient(
+                180deg,
+                transparentize($background, 1) 57.46%,
+                $background 100%
+            );
+        }
+
+        img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        span {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            color: #fff;
+            font-weight: 900;
+            font-size: 96px;
+        }
+    }
+
+    form {
+        width: 100%;
+
+        &.mdContainer {
+            width: 100%;
+            max-width: 363px;
+            margin: 0 auto;
+            margin-bottom: 48px;
+
+            & > div:not(.name) {
+                padding: 0;
+                padding-bottom: 12px;
+            }
+        }
+
+        & > div:not(.name) {
+            padding: 0px 24px;
+            padding-bottom: 24px;
+
+            h1 {
+                color: $accent2;
+                margin: 0;
+            }
+
+            a {
+                display: block;
+                color: #fff;
+                text-align: center;
+
+                margin: 12px 0px;
+                font-size: 12px;
+            }
+        }
+
+        .info-window {
+            position: relative;
+            color: #fff;
+            background: darken(#2a3169, 7);
+
+            padding: 12px 0px;
+            padding-left: 12px;
+
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+
+            ion-icon {
+                color: map-get($map: $app-colors, $key: 'fail');
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+
+                background: map-get($map: $app-colors, $key: 'fail');
+            }
+        }
+
+        mdc-text-field {
+            @include mdc-text-field-fill-color(#2a3169);
+            @include mdc-text-field-bottom-line-color(#fff);
+            @include mdc-text-field-label-color(#fff);
+            @include mdc-text-field-ink-color(#fff);
+            @include mdc-text-field-caret-color(#fff);
+
+            width: 100%;
+
+            &:hover {
+                @include mdc-text-field-bottom-line-color(#fff);
+            }
+
+            &:not(.mdc-text-field--invalid) {
+                @include mdc-text-field-line-ripple-color($accent1);
+            }
+
+            &.mdc-text-field--invalid {
+                @include mdc-text-field-line-ripple-color(
+                    map-get($map: $app-colors, $key: 'fail')
+                );
+            }
+        }
+
+        button.btn-login {
+            text-transform: uppercase;
+            height: 80px;
+
+            background: map-get($map: $app-colors, $key: 'info');
+            color: #fff;
+
+            font-family: 'Roboto', sans-serif;
+            font-family: 400;
+            font-size: 24px;
+            letter-spacing: 0.75px;
+
+            outline: none;
+            border: none;
+
+            &:not([disabled]) {
+                cursor: pointer;
+            }
+
+            &:hover {
+                opacity: 0.85;
+            }
+
+            &.success {
+                background: map-get($map: $app-colors, $key: 'success');
+            }
+
+            &.fail {
+                background: map-get($map: $app-colors, $key: 'fail');
+            }
+
+            &[disabled] {
+                cursor: not-allowed;
+                background: lighten($color: #000, $amount: 55);
+            }
+        }
+    }
+}

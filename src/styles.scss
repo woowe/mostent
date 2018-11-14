@@ -32,20 +32,6 @@ body {
     padding: 0;
 }
 
-// $background: map-get($app-colors, 'background');
-// $accent1: map-get(
-//     $map: $app-colors,
-//     $key: 'accent1'
-// );
-// $accent2: map-get(
-//     $map: $app-colors,
-//     $key: 'accent2'
-// );
-// $warn: map-get(
-//     $map: $app-colors,
-//     $key: 'warn'
-// );
-
 .app-typo- {
     &serif {
         font-family: 'Playfair Display', serif;

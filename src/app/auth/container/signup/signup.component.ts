@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
     FormBuilder,
     FormGroup,
@@ -17,7 +17,8 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
-    styleUrls: ['./signup.component.scss']
+    styleUrls: ['./signup.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SignupComponent implements OnInit {
     form: FormGroup;
@@ -35,12 +36,18 @@ export class SignupComponent implements OnInit {
     ngOnInit() {
         this.form = this.createForm();
 
+        this.form.valueChanges.subscribe(() => {
+            this.success = null;
+        });
+
         this.userCollection = this.afs.collection('Users');
     }
 
     createForm() {
         return new FormGroup(
             {
+                first_name: new FormControl('', Validators.required),
+                last_name: new FormControl('', Validators.required),
                 email: new FormControl('', [
                     Validators.required,
                     Validators.email
@@ -57,6 +64,8 @@ export class SignupComponent implements OnInit {
 
         this.auth
             .createUser(
+                this.form.get('first_name').value,
+                this.form.get('last_name').value,
                 this.form.get('email').value,
                 this.form.get('password').value
             )

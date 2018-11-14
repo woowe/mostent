@@ -49,13 +49,22 @@ export class AuthService {
         );
     }
 
-    createUser(email: string, password: string) {
+    createUser(
+        first_name: string,
+        last_name: string,
+        email: string,
+        password: string
+    ) {
         return from(
             this.afAuth.auth.createUserWithEmailAndPassword(email, password)
         ).pipe(
             tap(userCred => {
                 userCred.user.sendEmailVerification();
-                this.updateUserData(userCred.user);
+                this.updateUserData({
+                    ...userCred.user,
+                    first_name,
+                    last_name
+                });
             })
         );
     }
@@ -66,6 +75,8 @@ export class AuthService {
         );
 
         const data: User = {
+            first_name: user.first_name,
+            last_name: user.last_name,
             uid: user.uid,
             email: user.email
         };

@@ -1,41 +1,125 @@
-<div class="container" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <div class="contained">
-        <a class="mat-typography" [class.success]="success === true" mat-button routerLink="/auth/login"
-            routerLinkActive="router-link-active">
-            <ion-icon name="arrow-back"></ion-icon>
-            Back to Login
-        </a>
+<div class="container" fxLayout="column">
+    <div
+        fxFlex="1 1 auto"
+        class="branding-container"
+        fxLayoutAlign="center center"
+    >
+        <img src="../../../../assets/login_graphic.svg" />
+        <span class="app-typo-brand">m</span>
     </div>
-    <ng-container *ngIf="success !== undefined && success !== null">
-        <mat-card class="signup--success" *ngIf="success === true">
-            <h3>User created!</h3>
-            <p>Make sure you're email is verified</p>
-            <p>Then go back to the login page to sign in</p>
-        </mat-card>
-        <mat-card class="signup--failure" *ngIf="success === false">
-            Something went wrong!
-        </mat-card>
-    </ng-container>
-    <mat-card>
-        <form [formGroup]="form">
-            <mat-card-header>
-                <h1>Sign Up</h1>
-            </mat-card-header>
-            <mat-card-content fxLayout="column" fxLayoutGap="8px">
-                <mat-form-field>
-                    <input matInput type="email" placeholder="Email" formControlName="email">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput type="password" placeholder="Password" formControlName="password">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password">
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button [disabled]="!form.valid" (click)="createUser()" mat-raised-button color="primary" type="submit">SIGN
-                    UP</button>
-            </mat-card-actions>
-        </form>
-    </mat-card>
+    <form
+        [ngClass.gt-sm]="{ mdContainer: true }"
+        fxFlex="0 0 auto"
+        [formGroup]="form"
+        fxLayout="column"
+    >
+        <div fxLayout="column" fxLayoutGap="12px">
+            <h1 class="app-typo-h3">Start Here</h1>
+            <div class="name" fxLayout="row" fxLayoutGap="12px">
+                <mdc-form-field>
+                    <mdc-text-field
+                        type="text"
+                        label="First Name"
+                        formControlName="first_name"
+                        required
+                    >
+                    </mdc-text-field>
+                </mdc-form-field>
+                <mdc-form-field>
+                    <mdc-text-field
+                        type="text"
+                        label="Last Name"
+                        formControlName="last_name"
+                        required
+                    >
+                    </mdc-text-field>
+                </mdc-form-field>
+            </div>
+            <mdc-form-field>
+                <mdc-text-field
+                    type="email"
+                    label="Email"
+                    formControlName="email"
+                    required
+                    aria-autocomplete=""
+                >
+                </mdc-text-field>
+            </mdc-form-field>
+            <mdc-form-field>
+                <mdc-text-field
+                    type="password"
+                    label="Password"
+                    formControlName="password"
+                    required
+                >
+                </mdc-text-field>
+            </mdc-form-field>
+            <mdc-form-field>
+                <mdc-text-field
+                    type="password"
+                    label="Confirm Password"
+                    formControlName="confirm_password"
+                    required
+                >
+                </mdc-text-field>
+            </mdc-form-field>
+        </div>
+        <button
+            class="btn-login"
+            [class.success]="success"
+            [class.fail]="success === false"
+            [disabled]="!form.valid"
+            (click)="createUser()"
+            type="submit"
+        >
+            <ng-container *ngIf="success === null || success === undefined">
+                Sign Up
+            </ng-container>
+            <ng-container *ngIf="success === true"> Success </ng-container>
+            <ng-container *ngIf="success === false"> Failed </ng-container>
+        </button>
+    </form>
 </div>
+<!--
+    <div class="container" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+        <div class="contained">
+            <a class="mat-typography" [class.success]="success === true" mat-button routerLink="/auth/login"
+                routerLinkActive="router-link-active">
+                <ion-icon name="arrow-back"></ion-icon>
+                Back to Login
+            </a>
+        </div>
+        <ng-container *ngIf="success !== undefined && success !== null">
+            <mat-card class="signup--success" *ngIf="success === true">
+                <h3>User created!</h3>
+                <p>Make sure you're email is verified</p>
+                <p>Then go back to the login page to sign in</p>
+            </mat-card>
+            <mat-card class="signup--failure" *ngIf="success === false">
+                Something went wrong!
+            </mat-card>
+        </ng-container>
+        <mat-card>
+            <form [formGroup]="form">
+                <mat-card-header>
+                    <h1>Sign Up</h1>
+                </mat-card-header>
+                <mat-card-content fxLayout="column" fxLayoutGap="8px">
+                    <mat-form-field>
+                        <input matInput type="email" placeholder="Email" formControlName="email">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput type="password" placeholder="Password" formControlName="password">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password">
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button [disabled]="!form.valid" (click)="createUser()" mat-raised-button color="primary" type="submit">SIGN
+                        UP</button>
+                </mat-card-actions>
+            </form>
+        </mat-card>
+    </div>
+-->

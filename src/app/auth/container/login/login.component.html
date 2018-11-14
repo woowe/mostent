@@ -1,24 +1,69 @@
-<div class="container" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <div class="branding-container">
-        <img src="../../../../assets/login_graphic.svg">
+<div class="container" fxLayout="column">
+    <div
+        fxFlex="1 1 auto"
+        class="branding-container"
+        fxLayoutAlign="center center"
+    >
+        <img src="../../../../assets/login_graphic.svg" />
         <span class="app-typo-brand">m</span>
     </div>
-    <form [formGroup]="form" fxLayout="column" fxLayoutGap="20px">
-        <h1 class="app-typo-h3">Hello!</h1>
-        <mdc-form-field>
-            <mdc-text-field type="email" label="Email" formControlName="email">
-            </mdc-text-field>
-        </mdc-form-field>
-        <mdc-form-field>
-            <mdc-text-field type="password" label="Password" formControlName="password">
-            </mdc-text-field>
-        </mdc-form-field>
-        <button [disabled]="!form.valid" (click)="login()" mat-raised-button color="primary" type="submit">Sign
-            In</button>
+    <form
+        [ngClass.gt-sm]="{ mdContainer: true }"
+        fxFlex="0 0 auto"
+        [formGroup]="form"
+        fxLayout="column"
+    >
+        <div fxLayout="column" fxLayoutGap="12px">
+            <h1 class="app-typo-h3">Hello!</h1>
+            <div
+                class="info-window app-typo-body-1"
+                fxLayout="row"
+                fxLayoutGap="12px"
+                fxLayoutAlign="start center"
+                *ngIf="success === false"
+            >
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span>{{ infoMessage }}</span>
+            </div>
+            <mdc-form-field>
+                <mdc-text-field
+                    type="email"
+                    label="Email"
+                    formControlName="email"
+                    required
+                    aria-autocomplete=""
+                >
+                </mdc-text-field>
+            </mdc-form-field>
+            <mdc-form-field>
+                <mdc-text-field
+                    type="password"
+                    label="Password"
+                    formControlName="password"
+                    required
+                >
+                </mdc-text-field>
+            </mdc-form-field>
+            <a
+                class="app-typo-overline"
+                routerLink="/auth/signup"
+                routerLinkActive="router-link-active"
+                >Create Account</a
+            >
+        </div>
+        <button
+            class="btn-login"
+            [class.success]="success"
+            [class.fail]="success === false"
+            [disabled]="!form.valid"
+            (click)="login()"
+            type="submit"
+        >
+            <ng-container *ngIf="success === null || success === undefined">
+                Login
+            </ng-container>
+            <ng-container *ngIf="success === true"> Success </ng-container>
+            <ng-container *ngIf="success === false"> Failed </ng-container>
+        </button>
     </form>
-    <!-- <div class="contained mat-typography" fxLayout="column" fxLayoutGap="8px">
-        <p>Don't have an account yet?</p>fullwidth
-        <a mat-raised-button color="accent" routerLink="/auth/signup" routerLinkActive="router-link-active">Create an
-            account</a>
-    </div> -->
 </div>
