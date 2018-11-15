@@ -6,6 +6,8 @@ import { Space } from 'src/app/shared/models/space';
 import { map } from 'rxjs/operators';
 import { from, zip, combineLatest, of } from 'rxjs';
 
+import { DocumentReference } from '@angular/fire/firestore';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -64,7 +66,11 @@ export class SpaceService {
         }
 
         const assetRefs = [];
-        for (const assetRef of space.assets) {
+        for (let assetRef of space.assets) {
+            if (!assetRef.get) {
+                assetRef = this.afs.doc(`Assets/${(assetRef as any).uid}`).ref;
+            }
+
             assetRefs.push(from(assetRef.get().then(snap => snap.data())));
         }
 

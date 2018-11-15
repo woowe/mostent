@@ -1,19 +1,66 @@
 <section id="Header" fxLayout="row" fxLayoutAlign="space-between center">
-    <h1 class="mat-headline">Spaces</h1>
-    <button (click)="openSpaceDialog()" class="dashboard--add-space" mat-raised-button color="accent" fxLayout="row"
-        fxLayoutAlign="start center">
+    <h1>Spaces</h1>
+    <button
+        (click)="openSpaceDialog()"
+        class="dashboard--add-space"
+        mdc-button
+        unelevated
+        fxLayout="row"
+        fxLayoutAlign="start center"
+    >
         <ion-icon name="add"></ion-icon>
         <span>Add Space</span>
     </button>
 </section>
-<section id="Spaces">
-    <mat-nav-list>
-        <mat-list-item *ngFor="let space of (spaces$ | async)">
-            <a [routerLink]="['/space', space.uid]" routerLinkActive="router-link-active" class="container" fxLayout="row"
-                fxLayoutAlign="space-between center">
-                <div class="mat-body-1">{{ space.name }}</div>
-                <ion-icon name="arrow-forward"></ion-icon>
-            </a>
-        </mat-list-item>
-    </mat-nav-list>
+<section
+    id="Spaces"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="24px"
+    fxLayout.gt-sm="row wrap"
+    fxLayoutAlign.gt-sm="start start"
+>
+    <div
+        class="space-card"
+        *ngFor="let space of (spaces$ | async)"
+        fxLayout="column"
+        fxLayoutAlign="start space-between"
+        fxLayoutGap="18px"
+    >
+        <h5 class="app-typo-h5" fxFlex="1 0 auto">{{ space.name }}</h5>
+        <p class="app-typo-overline">Images</p>
+        <div class="space-card--images" fxLayout="row wrap" fxLayoutGap="8px">
+            <div class="space-card--image" *ngFor="let asset of space.assets">
+                <img [src]="asset.url" />
+            </div>
+            <div
+                class="space-card--image more"
+                *ngIf="space.more > 0"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+            >
+                <span>{{ space.more > 99 ? '99+' : space.more }}</span>
+                <span class="app-typo-overline">More</span>
+            </div>
+            <div
+                class="space-card--image more"
+                *ngIf="space.assets.length === 0"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+            >
+                <span>0</span> <span class="app-typo-overline">Images</span>
+            </div>
+        </div>
+        <a
+            mdc-button
+            unelevated
+            [routerLink]="['/space', space.uid]"
+            routerLinkActive="router-link-active"
+            fxLayout="row"
+            fxLayoutAlign="center center"
+        >
+            Visit
+            <ion-icon name="arrow-forward"></ion-icon>
+        </a>
+    </div>
 </section>

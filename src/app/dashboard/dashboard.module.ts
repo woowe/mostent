@@ -14,6 +14,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddSpaceDialogComponent } from './components/add-space-dialog/add-space-dialog.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
+import { MdcButtonModule } from '@angular-mdc/web';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { CoreModule } from '../core/core.module';
         MatDialogModule,
         MatFormFieldModule,
         MatInputModule,
-        MatListModule
+        MatListModule,
+        MdcButtonModule
     ],
     declarations: [DashboardComponent, AddSpaceDialogComponent],
     entryComponents: [AddSpaceDialogComponent],

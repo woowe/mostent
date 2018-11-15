@@ -1,3 +1,10 @@
+@import '../../../../styles.scss';
+
+$background: map-get(
+    $map: $app-colors,
+    $key: 'background'
+);
+
 mat-sidenav {
     width: 300px;
 
@@ -12,6 +19,10 @@ mat-sidenav {
             top: 0;
         }
     }
+}
+
+mat-sidenav-content {
+    background: $background;
 }
 
 [mat-button] {
