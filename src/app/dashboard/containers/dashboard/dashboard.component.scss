@@ -10,11 +10,14 @@ $accent1: map-get(
 );
 
 :host {
-    display: block;
-    width: 1069px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    width: 1116px;
     max-width: calc(100% - 48px);
 
-    min-height: 100vh;
+    min-height: 100%;
 
     margin: 0 auto;
 
@@ -24,14 +27,6 @@ ion-icon {
     &[name='add'] {
         font-size: 22px;
         margin-right: 7px;
-    }
-}
-
-mat-nav-list {
-    mat-list-item {
-        .container {
-            width: 100%;
-        }
     }
 }
 
@@ -46,6 +41,9 @@ mat-nav-list {
 }
 
 #Spaces {
+    position: relative;
+    width: 100%;
+
     .space-card {
         position: relative;
 
@@ -111,5 +109,13 @@ mat-nav-list {
                 }
             }
         }
+    }
+
+    .spinner-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
     }
 }

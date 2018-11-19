@@ -8,7 +8,8 @@ import {
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatProgressSpinnerModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddSpaceDialogComponent } from './components/add-space-dialog/add-space-dialog.component';
@@ -29,6 +30,7 @@ import { MdcButtonModule } from '@angular-mdc/web';
         MatFormFieldModule,
         MatInputModule,
         MatListModule,
+        MatProgressSpinnerModule,
         MdcButtonModule
     ],
     declarations: [DashboardComponent, AddSpaceDialogComponent],

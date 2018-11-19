@@ -23,6 +23,7 @@ mat-sidenav {
 
 mat-sidenav-content {
     background: $background;
+    min-height: 100vh;
 }
 
 [mat-button] {

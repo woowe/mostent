@@ -1,4 +1,9 @@
-<section id="Header" fxLayout="row" fxLayoutAlign="space-between center">
+<section
+    id="Header"
+    fxLayout="row"
+    fxFlex="0 0 auto"
+    fxLayoutAlign="space-between center"
+>
     <h1>Spaces</h1>
     <button
         (click)="openSpaceDialog()"
@@ -14,6 +19,7 @@
 </section>
 <section
     id="Spaces"
+    fxFlex="1 0 auto"
     fxLayout="column"
     fxLayoutAlign="center center"
     fxLayoutGap="24px"
@@ -73,7 +79,11 @@
         </div>
     </ng-container>
     <ng-template #loading>
-        <div class="spinner-container">
+        <div
+            fxFlex="1 0 auto"
+            class="spinner-container"
+            fxLayoutAlign="center center"
+        >
             <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
         </div>
     </ng-template>
